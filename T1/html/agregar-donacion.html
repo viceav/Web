@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agregar Donación</title>
+</head>
+
+<body>
+  <div class="container">
+    <form id="contacto">
+      <div>
+        <label for="username">Nombre Donante</label>
+        <input id="username" type="text" name="username" value="" required size="80" minlength="3" maxlength="80">
+      </div>
+      <div>
+        <label for="email">Email Donante</label>
+        <input id="email" type="email" name="email" value="" required size="30">
+      </div>
+      <div>
+        <label for="number">Número celular donante</label>
+        <input id="number" type="tel" name="number" value="" size="15">
+      </div>
+    </form>
+  </div>
+  <div class="containter" id="formContainer">
+    <div id="formulario">
+      <form id="dispositivo">
+        <div>
+          <label for="name">Nombre Dispositivo</label>
+          <input class="device-name" type="text" name="name" value="" required size="80" minlength="3">
+        </div>
+        <div>
+          <label for="descripcion">Descripción</label>
+          <textarea name="descripcion" rows="4" cols="50" style="resize: none;"></textarea>
+        </div>
+        <div>
+          <label for="tipo">Tipo</label>
+          <select name="tipo" required>
+            <option value=""></option>
+            <option value="">Pantalla</option>
+            <option value="">Notebook</option>
+            <option value="">Tablet</option>
+            <option value="">Celular</option>
+            <option value="">Consola</option>
+            <option value="">Mouse</option>
+            <option value="">Teclado</option>
+            <option value="">Impresora</option>
+            <option value="">Parlante</option>
+            <option value="">Audífono </option>
+          </select>
+        </div>
+        <div>
+          <label for="uso">Años De Uso</label>
+          <input class="uso" type="number" name="uso" value="" required size="3" min="1" max="99">
+        </div>
+        <div>
+          <label for="estado">Estado funcionamiento</label>
+          <select name="estado" required>
+            <option value=""></option>
+            <option value="">Funciona perfecto</option>
+            <option value="">Funciona a medias</option>
+            <option value="">No funciona</option>
+          </select>
+        </div>
+        <div>
+          <label for="productos">Fotos de productos</label>
+          <input class="file" type="file" accept="image/*" name="productos" value="" required>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div>
+    <button id="agregar">Agregar otro dispositivo a esta donación</button>
+  </div>
+</body>
+<script src="../js/donacion.js"> </script>
+
+</html>
