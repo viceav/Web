@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Información Dispositivo</title>
+    <link href="../css/info.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="main-container">
+      <a href="index.html">Portada</a>
+      <div id="info">
+        <h2>Información del Contacto</h2>
+        <table>
+          <tr>
+            <td>Nombre Donante:</td>
+            <td>Pedro Sanchez</td>
+          </tr>
+          <tr>
+            <td>Email Donante:</td>
+            <td>pedro.sanchez@nomail.com</td>
+          </tr>
+          <tr>
+            <td>Número celular Donante:</td>
+            <td>12345678</td>
+          </tr>
+          <tr>
+            <td>Región:</td>
+            <td>Región Del Maule</td>
+          </tr>
+          <tr>
+            <td>Comuna:</td>
+            <td>Teno</td>
+          </tr>
+        </table>
+        <h2>Información del Dispositivo</h2>
+        <table>
+          <tr>
+            <td>Nombre Dispositivo:</td>
+            <td>Samsung System A21s</td>
+          </tr>
+          <tr>
+            <td>Descripción:</td>
+            <td>No se cayó nunca, y el estado de la batería es del 98%</td>
+          </tr>
+          <tr>
+            <td>Tipo:</td>
+            <td>Celular</td>
+          </tr>
+          <tr>
+            <td>Años de uso:</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>Estado Funcionamiento:</td>
+            <td>Poco Uso</td>
+          </tr>
+        </table>
+      </div>
+      <img src="../img/640/celular.jpg" alt="Celular Donado" id="celu" />
+      <h2>Comentarios</h2>
+      <form>
+        <div class="container">
+          <h3>Agregar un comentario!</h3>
+          <div id="val-box" hidden>
+            <h2 id="val-msg"></h2>
+            <ul id="val-list"></ul>
+          </div>
+          <label for="name">Nombre</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            value=""
+            minlength="3"
+            maxlength="80"
+            required
+          />
+          <label for="text">Texto del Comentario</label>
+          <textarea
+            id="text"
+            rows="4"
+            cols="50"
+            style="resize: none"
+            minlength="5"
+            required
+          ></textarea>
+          <button type="button" id="submit-conf-btn">Agregar Comentario</button>
+        </div>
+      </form>
+      <div id="Comentarios">
+        <div class="container">
+          <p>Pedro<span>15/12/2023</span></p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. In
+            iaculis nunc sed augue lacus. Sed risus ultricies tristique nulla
+            aliquet. Et ultrices neque ornare aenean euismod elementum nisi
+            quis. Pretium quam vulputate dignissim suspendisse in est ante in.
+          </p>
+        </div>
+        <div class="container">
+          <div class="Info">
+            <p>Juan <span>23/6/2022</span></p>
+          </div>
+          <div class="Comment">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. In
+              iaculis nunc sed augue lacus. Sed risus ultricies tristique nulla
+              aliquet. Et ultrices neque ornare aenean euismod elementum nisi
+              quis. Pretium quam vulputate dignissim suspendisse in est ante in.
+            </p>
+          </div>
+        </div>
+        <div class="container">
+          <div class="Info">
+            <p>Diego<span>5/3/2019</span></p>
+          </div>
+          <div class="Comment">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. In
+              iaculis nunc sed augue lacus. Sed risus ultricies tristique nulla
+              aliquet. Et ultrices neque ornare aenean euismod elementum nisi
+              quis. Pretium quam vulputate dignissim suspendisse in est ante in.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="full" hidden>
+      <img src="../img/1280/celular.jpg" alt="Celular Donado" />
+    </div>
+    <script src="../js/image.js"></script>
+    <script src="../js/comment.js"></script>
+  </body>
+</html>
