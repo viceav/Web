@@ -57,7 +57,7 @@
             <input
               placeholder="Samsung Galaxy A21s"
               type="text"
-              class="name"
+              name="device"
               value=""
               required
               size="80"
@@ -66,13 +66,13 @@
             <label> Descripción</label>
             <textarea
               placeholder="Poco uso"
-              class="descripcion"
+              name="description"
               rows="4"
               cols="50"
               style="resize: none"
             ></textarea>
             <label>Tipo</label>
-            <select class="tipo" required>
+            <select name="type" required>
               <option label="Tipo"></option>
               <option>Pantalla</option>
               <option>Notebook</option>
@@ -89,14 +89,14 @@
             <input
               placeholder="1"
               type="text"
-              class="uso"
+              name="use"
               value=""
               size="3"
               maxlength="2"
               required
             />
             <label>Estado funcionamiento</label>
-            <select class="estado" required>
+            <select name="state" required>
               <option label="Estado"></option>
               <option>Funciona perfecto</option>
               <option>Funciona a medias</option>
@@ -104,7 +104,7 @@
             </select>
             <label>Fotos de productos</label>
             <input
-              class="files"
+              name="images"
               type="file"
               accept="image/*"
               multiple

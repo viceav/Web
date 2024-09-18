@@ -70,11 +70,11 @@ const validateForm = () => {
   let phoneNumber = myForm["number"].value;
   let regiones = myForm["Regiones"].value;
   let comunas = myForm["Comunas"].value;
-  let device = Array.from(document.getElementsByClassName("name"));
-  let tipo = Array.from(document.getElementsByClassName("tipo"));
-  let uso = Array.from(document.getElementsByClassName("uso"));
-  let estado = Array.from(document.getElementsByClassName("estado"));
-  let files = Array.from(document.getElementsByClassName("files"));
+  let device = myForm["device"];
+  let tipo = myForm["type"];
+  let uso = myForm["use"];
+  let estado = myForm["state"];
+  let files = myForm["images"];
 
   // variables auxiliares de validación y función.
   let invalidInputs = [];
@@ -101,40 +101,66 @@ const validateForm = () => {
     setInvalidInput("Comuna del Donante");
   }
 
-  device.forEach((_, i) => {
-    if (!validateName(device[i].value)) {
-      setInvalidInput(
-        i == 0 ? `Nombre del Dispositivo` : `Nombre del Dispositivo ${i + 1}`,
-      );
-    }
-    if (!validateSelect(tipo[i].value)) {
-      setInvalidInput(
-        i == 0 ? `Tipo de Dispositivo` : `Tipo de Dispositivo ${i + 1}`,
-      );
-    }
-    if (!validateUso(uso[i].value)) {
-      setInvalidInput(
-        i == 0
-          ? `Años de Uso del dispositivo`
-          : `Años de Uso del Dispositivo ${i + 1}`,
-      );
-    }
-    if (!validateSelect(estado[i].value)) {
-      setInvalidInput(
-        i == 0
-          ? `Estado de funcionamiento del Dispositivo`
-          : `Estado de funcionamiento del Dispositivo ${i + 1}`,
-      );
-    }
-    if (!validateFiles(files[i].files)) {
-      let message = "Fotos de productos: ";
-      i == 0
-        ? message += `Se requieren de 1 a 3 fotos para el Dispositivo`
-        : message += `Se requieren de 1 a 3 fotos para el Dispositivo ${i + 1}`,
-        setInvalidInput(message);
-    }
-  });
+  const isIterable = (obj) => {
+    return typeof obj[Symbol.iterator] === "function";
+  };
 
+  // Si no es iterable lo accedemos solo al valor
+  if (!isIterable(device)) {
+    if (!validateName(device.value)) {
+      setInvalidInput(`Nombre del Dispositivo`);
+    }
+    if (!validateSelect(tipo.value)) {
+      setInvalidInput(`Tipo de Dispositivo`);
+    }
+    if (!validateUso(uso.value)) {
+      setInvalidInput(`Años de Uso del dispositivo`);
+    }
+    if (!validateSelect(estado.value)) {
+      setInvalidInput(`Estado de funcionamiento del Dispositivo`);
+    }
+    if (!validateFiles(files.files)) {
+      let message = "Fotos de productos: ";
+      message += `Se requieren de 1 a 3 fotos para el Dispositivo`;
+      setInvalidInput(message);
+    }
+  } // Si es iterable vamos iterando para validar cada dispositivo
+  else {
+    device.forEach((_, i) => {
+      if (!validateName(device[i].value)) {
+        setInvalidInput(
+          i == 0 ? `Nombre del Dispositivo` : `Nombre del Dispositivo ${i + 1}`,
+        );
+      }
+      if (!validateSelect(tipo[i].value)) {
+        setInvalidInput(
+          i == 0 ? `Tipo de Dispositivo` : `Tipo de Dispositivo ${i + 1}`,
+        );
+      }
+      if (!validateUso(uso[i].value)) {
+        setInvalidInput(
+          i == 0
+            ? `Años de Uso del dispositivo`
+            : `Años de Uso del Dispositivo ${i + 1}`,
+        );
+      }
+      if (!validateSelect(estado[i].value)) {
+        setInvalidInput(
+          i == 0
+            ? `Estado de funcionamiento del Dispositivo`
+            : `Estado de funcionamiento del Dispositivo ${i + 1}`,
+        );
+      }
+      if (!validateFiles(files[i].files)) {
+        let message = "Fotos de productos: ";
+        i == 0
+          ? message += `Se requieren de 1 a 3 fotos para el Dispositivo`
+          : message += `Se requieren de 1 a 3 fotos para el Dispositivo ${
+            i + 1
+          }`, setInvalidInput(message);
+      }
+    });
+  }
   // finalmente mostrar la validación
   let validationBox = document.getElementById("val-box");
   let validationMessageElem = document.getElementById("val-msg");
