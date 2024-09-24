@@ -29,7 +29,7 @@ def validateName(name, index=-1):
 
 def validateEmail(email):
     if not email:
-        flash('Falta ingresar el email')
+        flash('Falta ingresar el Email')
         return False
 
     expr = r"^[\w.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
@@ -177,4 +177,4 @@ def validate(username, email, number, regiones, comuna, device, deviceType,
 
     return NameisValid and EmailisValid and RegionisValid and \
         ComunaisValid and DeviceisValid and TypeisValid and \
-        UsoisValid and StateisValid and NumberisValid
+        UsoisValid and StateisValid and NumberisValid and ImagesisValid
