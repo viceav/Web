@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agregar Donación</title>
+    <link rel="stylesheet" href="/static/css/agregar.css" />
+  </head>
+
+  <body>
+    {% if success %}
+    <div class="main-container">
+      <div id="success-box">
+        <h2 id="success-msg">
+          Hemos recibido la información de su donación. Muchas gracias
+        </h2>
+        <a href="/"><button type="button">Volver a la portada</button></a>
+      </div>
+    </div>
+    {% else %}
+    <div class="main-container">
+      <div id="link">
+        <a href="/">Portada</a>
+      </div>
+      {% if error %}
+      <div id="server-box">
+        <h2 id="server-msg">Los siguientes campos son inválidos</h2>
+        <ul id="server-list">
+          {% with messages = get_flashed_messages() %} {% for message in
+          messages %}
+          <li>{{message}}</li>
+          {% endfor %} {% endwith %}
+        </ul>
+      </div>
+      {% endif %}
+      <div id="val-box" hidden>
+        <h2 id="val-msg"></h2>
+        <ul id="val-list"></ul>
+      </div>
+      <form
+        id="form"
+        action="/agregar-donacion"
+        enctype="multipart/form-data"
+        method="POST"
+      >
+        <div class="container">
+          <label for="username">Nombre Donante</label>
+          <input
+            placeholder="Pepito Fernandez"
+            id="username"
+            type="text"
+            name="username"
+            value=""
+            size="80"
+            minlength="3"
+            maxlength="80"
+          />
+          <label for="email">Email Donante</label>
+          <input
+            placeholder="example@gmail.com"
+            id="email"
+            type="email"
+            name="email"
+            value=""
+            size="30"
+          />
+          <label for="number">Número celular donante</label>
+          <input id="number" type="tel" name="number" value="" size="15" />
+          <label for="Regiones">Región</label>
+          <select name="Regiones" id="Regiones">
+            <option label="Región"></option>
+          </select>
+          <label for="Comunas">Comuna</label>
+          <select name="Comunas" id="Comunas">
+            <option label="Comuna"></option>
+          </select>
+        </div>
+        <div id="Devices" class="container">
+          <div id="device-0">
+            <label>Nombre Dispositivo</label>
+            <input
+              placeholder="Samsung Galaxy A21s"
+              type="text"
+              name="device"
+              value=""
+              size="80"
+              minlength="3"
+            />
+            <label> Descripción</label>
+            <textarea
+              placeholder="Poco uso"
+              name="description"
+              rows="4"
+              cols="50"
+              style="resize: none"
+            ></textarea>
+            <label>Tipo</label>
+            <select name="type">
+              <option label="Tipo"></option>
+              <option>Pantalla</option>
+              <option>Notebook</option>
+              <option>Tablet</option>
+              <option>Celular</option>
+              <option>Consola</option>
+              <option>Mouse</option>
+              <option>Teclado</option>
+              <option>Impresora</option>
+              <option>Parlante</option>
+              <option>Audífono</option>
+            </select>
+            <label>Años De Uso</label>
+            <input
+              placeholder="1"
+              type="text"
+              name="use"
+              value=""
+              size="3"
+              maxlength="2"
+            />
+            <label>Estado funcionamiento</label>
+            <select name="state">
+              <option label="Estado"></option>
+              <option>Funciona perfecto</option>
+              <option>Funciona a medias</option>
+              <option>No funciona</option>
+            </select>
+            <label>Fotos de productos</label>
+            <input name="images" type="file" accept="image/*" multiple />
+          </div>
+          <button type="button" id="agregar">
+            Agregar otro dispositivo a esta donación
+          </button>
+        </div>
+        <div id="submit-div">
+          <button type="submit" id="publicar">Publicar esta donación</button>
+        </div>
+      </form>
+    </div>
+    <!--<script src="/static/js/validacion.js"></script>-->
+    <script src="/static/js/formdevices.js"></script>
+    <script src="/static/js/select.js"></script>
+    {% endif %}
+  </body>
+</html>
