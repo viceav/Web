@@ -65,7 +65,7 @@ ENGINE = InnoDB;
 -- Table `tarea2`.`dispositivo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tarea2`.`dispositivo` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `contacto_id` INT NOT NULL,
   `nombre` VARCHAR(80) NOT NULL,
   `descripcion` VARCHAR(300) NULL,
