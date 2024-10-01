@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dispositivos</title>
-    <link rel="stylesheet" href="../css/ver.css" />
+    <link rel="stylesheet" href="/static/css/ver.css" />
   </head>
   <body>
     <div class="main-container">
-      <a href="index.html">Portada</a>
+      <a href="/">Portada</a>
       <table>
         <tr>
           <th>Tipo</th>
@@ -17,48 +17,43 @@
           <th>Comuna</th>
           <th>Fotos</th>
         </tr>
-        <tr onclick="location.href='informacion-dispositivo.html'">
-          <td>Consola</td>
-          <td>Noplay Station 3</td>
-          <td>Funciona Perfecto</td>
-          <td>Recoleta</td>
-          <td>
-            <img src="../img/120/consola-120.jpg" alt="Noplay Station 3" />
-          </td>
+        {% if data %} {% for dis in data %}
+        <tr
+          onclick="location.href=`{{url_for('infoDispositivo',dis_id=dis.dispositivo_id,co_id=dis.contacto_id)}}`"
+        >
+          <th>{{dis.tipo}}</th>
+          <th>{{dis.nombre}}</th>
+          <th>{{dis.estado}}</th>
+          <th>{{dis.nombre_com}}</th>
+          <th>
+            {% for img in dis.fotos %}
+            <img
+              src="{{img.path_image}}"
+              width="120"
+              height="120"
+              alt="Imagen de {{dis.nombre}}"
+            />{% endfor %}
+          </th>
         </tr>
-        <tr onclick="location.href='informacion-dispositivo.html'">
-          <td>Notebook</td>
-          <td>NoThinkpad</td>
-          <td>Funciona a medias</td>
-          <td>La Reina</td>
-          <td><img src="../img/120/portatil-120.jpg" alt="NoThinkpad" /></td>
-        </tr>
-        <tr onclick="location.href='informacion-dispositivo.html'">
-          <td>Tablet</td>
-          <td>Giant Smartphone</td>
-          <td>No funciona</td>
-          <td>Santiago</td>
-          <td>
-            <img src="../img/120/tablet-120.jpg" alt="Giant Smartphone" />
-          </td>
-        </tr>
-        <tr onclick="location.href='informacion-dispositivo.html'">
-          <td>Celular</td>
-          <td>Samsung System A21s</td>
-          <td>Funciona Perfecto</td>
-          <td>Puente Alto</td>
-          <td>
-            <img src="../img/120/celular-120.jpg" alt="Samsung System A21" />
-          </td>
-        </tr>
-        <tr onclick="location.href='informacion-dispositivo.html'">
-          <td>Teclado</td>
-          <td>NoLogic</td>
-          <td>Funciona a medias</td>
-          <td>Vitacura</td>
-          <td><img src="../img/120/teclado-120.jpg" alt="NoLogic" /></td>
-        </tr>
+        {% endfor %} {% endif %}
       </table>
+      {% if offset and data %}
+      <button
+        id="back"
+        type="button"
+        onclick="location.href=`{{url_for('verDispositivos',offset=offset-1)}}`"
+      >
+        ←
+      </button>
+      {% endif %} {% if data|length == 5 and data %}
+      <button
+        id="next"
+        type="button"
+        onclick="location.href=`{{url_for('verDispositivos',offset=offset+1)}}`"
+      >
+        →
+      </button>
+      {% endif %}
     </div>
   </body>
 </html>

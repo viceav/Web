@@ -4,60 +4,81 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Información Dispositivo</title>
-    <link href="../css/info.css" rel="stylesheet" />
+    <link href="/static/css/info.css" rel="stylesheet" />
   </head>
   <body>
+    <script>
+      function toggleFull(id) {
+        const img = document.getElementById(`full${id}`);
+        const body = document.body;
+        if (img.hidden) {
+          body.style = "overflow: hidden;";
+          img.hidden = false;
+        } else {
+          body.style = "overflow: auto;";
+          img.hidden = true;
+        }
+      }
+    </script>
     <div class="main-container">
-      <a href="index.html">Portada</a>
+      <a href="/">Portada</a>
       <div id="info">
         <h2>Información del Contacto</h2>
         <table>
           <tr>
             <td>Nombre Donante:</td>
-            <td>Pedro Sanchez</td>
+            <td>{{co.nombre}}:</td>
           </tr>
           <tr>
             <td>Email Donante:</td>
-            <td>pedro.sanchez@nomail.com</td>
+            <td>{{co.email}}:</td>
           </tr>
           <tr>
             <td>Número celular Donante:</td>
-            <td>12345678</td>
-          </tr>
-          <tr>
-            <td>Región:</td>
-            <td>Región Del Maule</td>
+            <td>{{co.celular}}</td>
           </tr>
           <tr>
             <td>Comuna:</td>
-            <td>Teno</td>
+            <td>{{co.comuna}}</td>
+          </tr>
+          <tr>
+            <td>Región:</td>
+            <td>{{co.region}}</td>
           </tr>
         </table>
         <h2>Información del Dispositivo</h2>
         <table>
           <tr>
             <td>Nombre Dispositivo:</td>
-            <td>Samsung System A21s</td>
+            <td>{{dis.nombre}}</td>
           </tr>
           <tr>
             <td>Descripción:</td>
-            <td>No se cayó nunca, y el estado de la batería es del 98%</td>
+            <td>{{dis.descripcion}}</td>
           </tr>
           <tr>
             <td>Tipo:</td>
-            <td>Celular</td>
+            <td>{{dis.tipo}}</td>
           </tr>
           <tr>
             <td>Años de uso:</td>
-            <td>2</td>
+            <td>{{dis.uso}}</td>
           </tr>
           <tr>
             <td>Estado Funcionamiento:</td>
-            <td>Poco Uso</td>
+            <td>{{dis.estado}}</td>
           </tr>
         </table>
       </div>
-      <img src="../img/640/celular.jpg" alt="Celular Donado" id="celu" />
+      {% for img in dis.fotos %}
+      <img
+        src="{{img.path_image}}"
+        id="image-{{img.index}}"
+        height="480"
+        width="640"
+        alt="Imagen de {{dis.nombre}}"
+        onclick="toggleFull('image-{{img.index}}')"
+      />{% endfor %}
       <h2>Comentarios</h2>
       <form>
         <div class="container">
@@ -129,10 +150,18 @@
         </div>
       </div>
     </div>
-    <div id="full" hidden>
-      <img src="../img/1280/celular.jpg" alt="Celular Donado" />
+    {% for img in dis.fotos %}
+    <div id="fullimage-{{img.index}}" class="full" hidden>
+      <img
+        src="{{img.path_image}}"
+        width="1280"
+        height="1024"
+        alt="Imagen de {{dis.nombre}}"
+        onclick="toggleFull('image-{{img.index}}')"
+      />
     </div>
-    <script src="../js/image.js"></script>
-    <script src="../js/comment.js"></script>
+    {% endfor %}
+
+    <script src="/static/js/comment.js"></script>
   </body>
 </html>
