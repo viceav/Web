@@ -1,5 +1,13 @@
-from flask import Flask, render_template, request, send_file
+import datetime
+import hashlib
+import os
+import uuid
 
+import filetype
+from flask import Flask, render_template, request, send_file, url_for
+from werkzeug.utils import secure_filename
+
+from db import db
 from utils.validations import validate
 
 UPLOAD_FOLDER = 'static/uploads'
@@ -8,6 +16,24 @@ app = Flask(__name__)
 app.secret_key = 'super_secret_1234567890'
 app.config['MAX_CONTENT_LENGTH'] = 1 * 1000 * 1000  # 1 megabyte
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+def timeNow():
+    return datetime.datetime.now().isoformat(' ', "seconds")
+
+
+def saveImg(img):
+    _filename = hashlib.sha256(
+        secure_filename(img.filename)  # nombre del archivo
+        .encode("utf-8")  # encodear a bytes
+    ).hexdigest()
+    _extension = filetype.guess(img).extension
+    img_filename = f"{_filename}_{str(uuid.uuid4())}.{_extension}"
+
+    # 2. save img as a file
+    path = os.path.join(app.config["UPLOAD_FOLDER"], img_filename)
+    img.save(path)
+    return path, img_filename
 
 
 @app.route("/")
@@ -24,6 +50,7 @@ def donacion():
         regiones = request.form['Regiones']
         comuna = request.form['Comunas']
         device = request.form.getlist('device')
+        description = request.form.getlist('description')
         deviceType = request.form.getlist('type')
         uso = request.form.getlist('use')
         state = request.form.getlist('state')
@@ -32,9 +59,106 @@ def donacion():
         if not isValid:
             return render_template("agregar-donacion.html", error=not isValid)
         else:
+            # save confession in db
+            fecha_creacion = timeNow()
+            db.insertContact(username, email, number, comuna, fecha_creacion)
+            thisContactId = db.getContactId(username, email, number, comuna,
+                                            fecha_creacion)
+
+            for i in range(len(device)):
+                db.insertDispositivo(thisContactId, device[i], description[i],
+                                     deviceType[i], uso[i], state[i])
+
+            for i in range(len(device)):
+                if i == 0:
+                    for image in request.files.getlist('images'):
+                        path, filename = saveImg(image)
+                        thisDevice = db.getDispositivoId(
+                            thisContactId, device[i], description[i],
+                            deviceType[i], uso[i], state[i])
+                        db.insertArchivo(path, filename, thisDevice)
+
+                else:
+                    for image in request.files.getlist(f'images-{i+1}'):
+                        path, filename = saveImg(image)
+                        thisDevice = db.getDispositivoId(
+                            thisContactId, device[i], description[i],
+                            deviceType[i], uso[i], state[i])
+                        db.insertArchivo(path, filename, thisDevice)
+
             return render_template("agregar-donacion.html", success=True)
     else:
         return render_template("agregar-donacion.html")
+
+
+@app.route("/ver-dispositivos/<int:offset>", methods=['GET'])
+@app.route("/ver-dispositivos", methods=['GET'])
+def verDispositivos(offset=None):
+    if not offset:
+        offset = 0
+    data = []
+    for dispositivo in db.ver5Dispositivos(offset * 5):
+        tipo, nombre, estado, nombre_com, dispositivo_id, contacto_id = dispositivo
+        archivos = []
+        for img in db.getArchivoById(dispositivo_id):
+            img_route = f"uploads/{img[0]}"
+            archivos.append(
+                {"path_image": url_for('static', filename=img_route)})
+        data.append({
+            "tipo": tipo,
+            "nombre": nombre,
+            "estado": estado,
+            "nombre_com": nombre_com,
+            "fotos": archivos,
+            "contacto_id": contacto_id,
+            "dispositivo_id": dispositivo_id,
+        })
+    return render_template("ver-dispositivos.html", data=data, offset=offset)
+
+
+@app.route("/informacion-dispositivos", methods=["GET"])
+def infoDispositivo():
+    dispositivo_id = request.args.get('dis_id')
+    contacto_id = request.args.get('co_id')
+    dis_nombre, dis_descripcion, dis_tipo, dis_anos_uso, dis_estado = db.getDispositivoInfo(
+        dispositivo_id)
+    co_nombre, co_email, co_celular, co_comuna_id = db.getContactInfo(
+        contacto_id)
+
+    com_nombre, region_id = db.getComunaInfo(co_comuna_id)
+
+    archivos = []
+    index = 0
+    for img in db.getArchivoById(dispositivo_id):
+        img_route = f"uploads/{img[0]}"
+        archivos.append({
+            "path_image": url_for('static', filename=img_route),
+            "index": index
+        })
+        index += 1
+
+    dispositivo = {
+        "nombre": dis_nombre,
+        "descripcion": dis_descripcion,
+        "tipo": dis_tipo,
+        "uso": dis_anos_uso,
+        "estado": dis_estado,
+        "fotos": archivos
+    }
+
+    contacto = {
+        "nombre": co_nombre,
+        "email": co_email,
+        "celular": co_celular,
+        "comuna": com_nombre,
+        "region": db.getRegionName(region_id)
+    }
+
+    return render_template(
+        'informacion-dispositivo.html',
+        dis=dispositivo,
+        co=contacto,
+    )
 
 
 @app.route("/static/region-comuna.json", methods=["GET"])
