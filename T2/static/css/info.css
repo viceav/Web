@@ -30,7 +30,7 @@ img {
   border-radius: 10px;
 }
 
-#full {
+.full {
   overflow: auto;
   position: fixed;
   z-index: 100;
