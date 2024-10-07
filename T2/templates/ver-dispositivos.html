@@ -27,12 +27,8 @@
           <th>{{dis.nombre_com}}</th>
           <th>
             {% for img in dis.fotos %}
-            <img
-              src="{{img.path_image}}"
-              width="120"
-              height="120"
-              alt="Imagen de {{dis.nombre}}"
-            />{% endfor %}
+            <img src="{{img.path_image}}" alt="Imagen de {{dis.nombre}}" />{%
+            endfor %}
           </th>
         </tr>
         {% endfor %} {% endif %}

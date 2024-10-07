@@ -74,8 +74,6 @@
       <img
         src="{{img.path_image}}"
         id="image-{{img.index}}"
-        height="480"
-        width="640"
         alt="Imagen de {{dis.nombre}}"
         onclick="toggleFull('image-{{img.index}}')"
       />{% endfor %}
@@ -153,9 +151,7 @@
     {% for img in dis.fotos %}
     <div id="fullimage-{{img.index}}" class="full" hidden>
       <img
-        src="{{img.path_image}}"
-        width="1280"
-        height="1024"
+        src="{{img.path_image_full}}"
         alt="Imagen de {{dis.nombre}}"
         onclick="toggleFull('image-{{img.index}}')"
       />

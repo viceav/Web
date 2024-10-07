@@ -5,6 +5,7 @@ import uuid
 
 import filetype
 from flask import Flask, render_template, request, send_file, url_for
+from PIL import Image
 from werkzeug.utils import secure_filename
 
 from db import db
@@ -31,8 +32,19 @@ def saveImg(img):
     img_filename = f"{_filename}_{str(uuid.uuid4())}.{_extension}"
 
     # 2. save img as a file
+    # Save the original file
     path = os.path.join(app.config["UPLOAD_FOLDER"], img_filename)
     img.save(path)
+
+    # Save each different size for the front end
+    with Image.open(f"{path}") as im:
+        im.resize((120, 120)).save(
+            os.path.join(app.config['UPLOAD_FOLDER'], "120", img_filename))
+        im.resize((640, 480)).save(
+            os.path.join(app.config['UPLOAD_FOLDER'], "640", img_filename))
+        im.resize((1280, 1024)).save(
+            os.path.join(app.config['UPLOAD_FOLDER'], "1280", img_filename))
+
     return path, img_filename
 
 
@@ -101,7 +113,7 @@ def verDispositivos(offset=None):
         tipo, nombre, estado, nombre_com, dispositivo_id, contacto_id = dispositivo
         archivos = []
         for img in db.getArchivoById(dispositivo_id):
-            img_route = f"uploads/{img[0]}"
+            img_route = f"uploads/120/{img[0]}"
             archivos.append(
                 {"path_image": url_for('static', filename=img_route)})
         data.append({
@@ -130,10 +142,15 @@ def infoDispositivo():
     archivos = []
     index = 0
     for img in db.getArchivoById(dispositivo_id):
-        img_route = f"uploads/{img[0]}"
+        img_route = f"uploads/640/{img[0]}"
+        img_route_full = f"uploads/1280/{img[0]}"
         archivos.append({
-            "path_image": url_for('static', filename=img_route),
-            "index": index
+            "path_image":
+            url_for('static', filename=img_route),
+            "path_image_full":
+            url_for('static', filename=img_route_full),
+            "index":
+            index
         })
         index += 1
 
