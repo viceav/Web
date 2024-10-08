@@ -17,7 +17,7 @@
           <th>Comuna</th>
           <th>Fotos</th>
         </tr>
-        {% if data %} {% for dis in data %}
+        {% if data[0] %} {% for dis in data[0] %}
         <tr
           onclick="location.href=`{{url_for('infoDispositivo',dis_id=dis.dispositivo_id,co_id=dis.contacto_id)}}`"
         >
@@ -33,7 +33,7 @@
         </tr>
         {% endfor %} {% endif %}
       </table>
-      {% if offset and data %}
+      {% if offset and data[0] %}
       <button
         id="back"
         type="button"
@@ -41,7 +41,7 @@
       >
         ←
       </button>
-      {% endif %} {% if data|length == 5 and data %}
+      {% endif %} {% if data[0]|length == 5 and data[1] %}
       <button
         id="next"
         type="button"

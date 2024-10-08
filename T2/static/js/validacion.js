@@ -74,7 +74,6 @@ const validateForm = () => {
   let tipo = myForm["type"];
   let uso = myForm["use"];
   let estado = myForm["state"];
-  let files = myForm["images"];
 
   // variables auxiliares de validación y función.
   let invalidInputs = [];
@@ -107,6 +106,7 @@ const validateForm = () => {
 
   // Si no es iterable lo accedemos solo al valor
   if (!isIterable(device)) {
+    let files = myForm["images"];
     if (!validateName(device.value)) {
       setInvalidInput(`Nombre del Dispositivo`);
     }
@@ -127,6 +127,12 @@ const validateForm = () => {
   } // Si es iterable vamos iterando para validar cada dispositivo
   else {
     device.forEach((_, i) => {
+      let files;
+      if (i == 0) {
+        files = myForm["images"];
+      } else {
+        files = myForm[`images-${i + 1}`];
+      }
       if (!validateName(device[i].value)) {
         setInvalidInput(
           i == 0 ? `Nombre del Dispositivo` : `Nombre del Dispositivo ${i + 1}`,
@@ -151,7 +157,7 @@ const validateForm = () => {
             : `Estado de funcionamiento del Dispositivo ${i + 1}`,
         );
       }
-      if (!validateFiles(files[i].files)) {
+      if (!validateFiles(files.files)) {
         let message = "Fotos de productos: ";
         i == 0
           ? message += `Se requieren de 1 a 3 fotos para el Dispositivo`

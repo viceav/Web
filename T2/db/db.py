@@ -64,7 +64,12 @@ def ver5Dispositivos(offset):
     conn = getConnection()
     cursor = conn.cursor()
     cursor.execute(QUERY_DICT["ver5Dispositivos"], (offset))
-    return cursor.fetchall()
+    data = cursor.fetchmany(5)
+    # La query retorna un max de 6 elementos para
+    # ver si agregar el botón para la siguiente página
+    # en ver-dispositivos
+    r = 1 if cursor.fetchone() else 0
+    return (data, r)
 
 
 def getArchivoById(id):

@@ -54,6 +54,7 @@
             size="80"
             minlength="3"
             maxlength="80"
+            required
           />
           <label for="email">Email Donante</label>
           <input
@@ -63,15 +64,16 @@
             name="email"
             value=""
             size="30"
+            required
           />
           <label for="number">Número celular donante</label>
           <input id="number" type="tel" name="number" value="" size="15" />
           <label for="Regiones">Región</label>
-          <select name="Regiones" id="Regiones">
+          <select name="Regiones" id="Regiones" required>
             <option label="Región"></option>
           </select>
           <label for="Comunas">Comuna</label>
-          <select name="Comunas" id="Comunas">
+          <select name="Comunas" id="Comunas" required>
             <option label="Comuna"></option>
           </select>
         </div>
@@ -85,6 +87,7 @@
               value=""
               size="80"
               minlength="3"
+              required
             />
             <label> Descripción</label>
             <textarea
@@ -95,7 +98,7 @@
               style="resize: none"
             ></textarea>
             <label>Tipo</label>
-            <select name="type">
+            <select name="type" required>
               <option label="Tipo"></option>
               <option>Pantalla</option>
               <option>Notebook</option>
@@ -117,27 +120,34 @@
               value=""
               size="3"
               maxlength="2"
+              required
             />
             <label>Estado funcionamiento</label>
-            <select name="state">
+            <select name="state" required>
               <option label="Estado"></option>
               <option>Funciona perfecto</option>
               <option>Funciona a medias</option>
               <option>No funciona</option>
             </select>
             <label>Fotos de productos</label>
-            <input name="images" type="file" accept="image/*" multiple />
+            <input
+              name="images"
+              type="file"
+              accept="image/*"
+              multiple
+              required
+            />
           </div>
           <button type="button" id="agregar">
             Agregar otro dispositivo a esta donación
           </button>
         </div>
         <div id="submit-div">
-          <button type="submit" id="publicar">Publicar esta donación</button>
+          <button type="button" id="publicar">Publicar esta donación</button>
         </div>
       </form>
     </div>
-    <!--<script src="/static/js/validacion.js"></script>-->
+    <script src="/static/js/validacion.js"></script>
     <script src="/static/js/formdevices.js"></script>
     <script src="/static/js/select.js"></script>
     {% endif %}

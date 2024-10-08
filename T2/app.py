@@ -109,7 +109,10 @@ def verDispositivos(offset=None):
     if not offset:
         offset = 0
     data = []
-    for dispositivo in db.ver5Dispositivos(offset * 5):
+    # Entregamos los dispositivos y r que indica si
+    # existen o no más elementos que mostrar
+    (devices, r) = db.ver5Dispositivos(offset * 5)
+    for dispositivo in devices:
         tipo, nombre, estado, nombre_com, dispositivo_id, contacto_id = dispositivo
         archivos = []
         for img in db.getArchivoById(dispositivo_id):
@@ -125,7 +128,9 @@ def verDispositivos(offset=None):
             "contacto_id": contacto_id,
             "dispositivo_id": dispositivo_id,
         })
-    return render_template("ver-dispositivos.html", data=data, offset=offset)
+    return render_template("ver-dispositivos.html",
+                           data=(data, r),
+                           offset=offset)
 
 
 @app.route("/informacion-dispositivos", methods=["GET"])
