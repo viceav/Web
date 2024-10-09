@@ -7,12 +7,14 @@ with open('db/querys.json', 'r') as querys:
 
 
 def getConnection():
-    conn = pymysql.connect(db='tarea2',
-                           user='cc5002',
-                           passwd='programacionweb',
-                           host='172.17.0.2',
-                           port=3306,
-                           charset='utf8')
+    conn = pymysql.connect(
+        db='tarea2',
+        user='cc5002',
+        passwd='programacionweb',
+        host='localhost',
+        # host='172.17.0.2',  # Mysql Container
+        port=3306,
+        charset='utf8')
     return conn
 
 

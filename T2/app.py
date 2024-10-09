@@ -15,7 +15,7 @@ UPLOAD_FOLDER = 'static/uploads'
 
 app = Flask(__name__)
 app.secret_key = 'super_secret_1234567890'
-app.config['MAX_CONTENT_LENGTH'] = 1 * 1000 * 1000  # 1 megabyte
+app.config['MAX_CONTENT_LENGTH'] = 2 * 1000 * 1000  # 1 megabyte
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
