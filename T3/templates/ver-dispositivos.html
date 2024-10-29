@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dispositivos</title>
+    <link rel="stylesheet" href="/static/css/ver.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <a href="/">Portada</a>
+      <table>
+        <tr>
+          <th>Tipo</th>
+          <th>Nombre Dispositivo</th>
+          <th>Estado</th>
+          <th>Comuna</th>
+          <th>Fotos</th>
+        </tr>
+        {% if data[0] %} {% for dis in data[0] %}
+        <tr
+          onclick="location.href=`{{url_for('infoDispositivo',dis_id=dis.dispositivo_id,co_id=dis.contacto_id)}}`"
+        >
+          <th>{{dis.tipo}}</th>
+          <th>{{dis.nombre}}</th>
+          <th>{{dis.estado}}</th>
+          <th>{{dis.nombre_com}}</th>
+          <th>
+            {% for img in dis.fotos %}
+            <img src="{{img.path_image}}" alt="Imagen de {{dis.nombre}}" />{%
+            endfor %}
+          </th>
+        </tr>
+        {% endfor %} {% endif %}
+      </table>
+      {% if offset and data[0] %}
+      <button
+        id="back"
+        type="button"
+        onclick="location.href=`{{url_for('verDispositivos',offset=offset-1)}}`"
+      >
+        ←
+      </button>
+      {% endif %} {% if data[0]|length == 5 and data[1] %}
+      <button
+        id="next"
+        type="button"
+        onclick="location.href=`{{url_for('verDispositivos',offset=offset+1)}}`"
+      >
+        →
+      </button>
+      {% endif %}
+    </div>
+  </body>
+</html>

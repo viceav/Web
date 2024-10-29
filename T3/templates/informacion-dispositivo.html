@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Información Dispositivo</title>
+    <link href="/static/css/info.css" rel="stylesheet" />
+  </head>
+  <body>
+    <script>
+      function toggleFull(id) {
+        const img = document.getElementById(`full${id}`);
+        const body = document.body;
+        if (img.hidden) {
+          body.style = "overflow: hidden;";
+          img.hidden = false;
+        } else {
+          body.style = "overflow: auto;";
+          img.hidden = true;
+        }
+      }
+    </script>
+    <div class="main-container">
+      <a href="/">Portada</a>
+      <div id="info">
+        <h2>Información del Contacto</h2>
+        <table>
+          <tr>
+            <td>Nombre Donante:</td>
+            <td>{{co.nombre}}:</td>
+          </tr>
+          <tr>
+            <td>Email Donante:</td>
+            <td>{{co.email}}:</td>
+          </tr>
+          <tr>
+            <td>Número celular Donante:</td>
+            <td>{{co.celular}}</td>
+          </tr>
+          <tr>
+            <td>Comuna:</td>
+            <td>{{co.comuna}}</td>
+          </tr>
+          <tr>
+            <td>Región:</td>
+            <td>{{co.region}}</td>
+          </tr>
+        </table>
+        <h2>Información del Dispositivo</h2>
+        <table>
+          <tr>
+            <td>Nombre Dispositivo:</td>
+            <td>{{dis.nombre}}</td>
+          </tr>
+          <tr>
+            <td>Descripción:</td>
+            <td>{{dis.descripcion}}</td>
+          </tr>
+          <tr>
+            <td>Tipo:</td>
+            <td>{{dis.tipo}}</td>
+          </tr>
+          <tr>
+            <td>Años de uso:</td>
+            <td>{{dis.uso}}</td>
+          </tr>
+          <tr>
+            <td>Estado Funcionamiento:</td>
+            <td>{{dis.estado}}</td>
+          </tr>
+        </table>
+      </div>
+      {% for img in dis.fotos %}
+      <img
+        src="{{img.path_image}}"
+        id="image-{{img.index}}"
+        alt="Imagen de {{dis.nombre}}"
+        onclick="toggleFull('image-{{img.index}}')"
+      />{% endfor %}
+      <h2>Comentarios</h2>
+      <form id="form" , method="POST">
+        <div class="container">
+          <h3>Agregar un comentario!</h3>
+          {% if error %}
+          <div id="server-box">
+            <h2 id="server-msg">Los siguientes campos son inválidos</h2>
+            <ul id="server-list">
+              {% with messages = get_flashed_messages() %} {% for message in
+              messages %}
+              <li>{{message}}</li>
+              {% endfor %} {% endwith %}
+            </ul>
+          </div>
+          {% endif %}
+          <div id="val-box" hidden>
+            <h2 id="val-msg"></h2>
+            <ul id="val-list"></ul>
+          </div>
+          <label for="name">Nombre</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            value=""
+            minlength="3"
+            maxlength="80"
+            required
+          />
+          <label for="text">Texto del Comentario</label>
+          <textarea
+            id="text"
+            name="text"
+            rows="4"
+            cols="50"
+            style="resize: none"
+            minlength="5"
+            required
+          ></textarea>
+          <button type="button" form="form" id="submit-conf-btn">
+            Agregar Comentario
+          </button>
+        </div>
+      </form>
+      <div id="Comentarios">
+        {% if comments %} {% for comment in comments %}
+        <div class="container">
+          <p>{{comment.name}}<span>{{comment.date}}</span></p>
+          <p>{{comment.text}}</p>
+        </div>
+        {%endfor%} {%endif%}
+      </div>
+    </div>
+    {% for img in dis.fotos %}
+    <div id="fullimage-{{img.index}}" class="full" hidden>
+      <img
+        src="{{img.path_image_full}}"
+        alt="Imagen de {{dis.nombre}}"
+        onclick="toggleFull('image-{{img.index}}')"
+      />
+    </div>
+    {% endfor %}
+    <script src="/static/js/comment.js"></script>
+  </body>
+</html>

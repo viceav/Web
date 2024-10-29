@@ -1,0 +1,15 @@
+{
+  "insertContact": "INSERT INTO contacto (nombre,email,celular,comuna_id,fecha_creacion) values (%s,%s,%s,%s,%s)",
+  "insertDispositivo": "INSERT INTO dispositivo (contacto_id,nombre,descripcion,tipo,anos_uso,estado) values (%s,%s,%s,%s,%s,%s)",
+  "insertArchivo": "INSERT INTO archivo (ruta_archivo,nombre_archivo,dispositivo_id) values (%s,%s,%s)",
+  "getContactId": "SELECT id from contacto WHERE (nombre,email,celular,comuna_id,fecha_creacion) = (%s,%s,%s,%s,%s)",
+  "getDispositivoId": "SELECT id from dispositivo WHERE (contacto_id,nombre,descripcion,tipo,anos_uso,estado) = (%s,%s,%s,%s,%s,%s)",
+  "ver5Dispositivos": "SELECT di.tipo, di.nombre, di.estado, com.nombre, di.id AS dispositivo_id, co.id AS contacto_id FROM dispositivo AS di JOIN contacto AS co ON di.contacto_id = co.id JOIN comuna AS com ON com.id = co.comuna_id ORDER BY dispositivo_id DESC LIMIT % s, 6",
+  "getArchivoById": "SELECT nombre_archivo from archivo where dispositivo_id=%s",
+  "getContactInfo": "SELECT nombre,email,celular,comuna_id from contacto where id=%s",
+  "getDispositivoInfo": "SELECT nombre,descripcion,tipo,anos_uso,estado from dispositivo where id=%s",
+  "getComunaInfo": "SELECT nombre,region_id from comuna where id=%s",
+  "getRegionName": "SELECT nombre from region where id=%s",
+  "getComments": "SELECT nombre,texto,fecha from comentario where dispositivo_id=%s order by fecha desc",
+  "insertComment": "INSERT INTO comentario (nombre,texto,fecha,dispositivo_id) values (%s,%s,%s,%s)"
+}
