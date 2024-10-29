@@ -11,5 +11,7 @@
   "getComunaInfo": "SELECT nombre,region_id from comuna where id=%s",
   "getRegionName": "SELECT nombre from region where id=%s",
   "getComments": "SELECT nombre,texto,fecha from comentario where dispositivo_id=%s order by fecha desc",
-  "insertComment": "INSERT INTO comentario (nombre,texto,fecha,dispositivo_id) values (%s,%s,%s,%s)"
+  "insertComment": "INSERT INTO comentario (nombre,texto,fecha,dispositivo_id) values (%s,%s,%s,%s)",
+  "getTipoDispositivo": "select tipo,count(*) from dispositivo group by tipo",
+  "getContactosComuna": "select com.nombre, count(*) from contacto as cont join comuna as com on cont.comuna_id = com.id group by com.nombre"
 }

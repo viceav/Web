@@ -4,7 +4,7 @@ import os
 import uuid
 
 import filetype
-from flask import Flask, render_template, request, send_file, url_for
+from flask import Flask, jsonify, render_template, request, send_file, url_for
 from PIL import Image
 from werkzeug.utils import secure_filename
 
@@ -209,6 +209,36 @@ def infoDispositivo():
 @app.route("/static/region-comuna.json", methods=["GET"])
 def regionJson():
     return send_file('static/region-comuna.json')
+
+
+@app.route('/tipo-dispositivos', methods=["GET"])
+def tipoDispositivos():
+    data = []
+    for tipoDispotivo in db.getTipoDispositivo():
+        tipo, count = tipoDispotivo
+        data.append({"name": tipo, "y": count})
+
+    return jsonify(data)
+
+
+@app.route('/contactos-por-comuna', methods=["GET"])
+def contactosPorComuna():
+    data = []
+    for contactosPorComuna in db.getContactosComuna():
+        comuna, count = contactosPorComuna
+        data.append({"name": comuna, "y": count})
+
+    return jsonify(data)
+
+
+@app.route('/grafico/tipo-dispositivos', methods=["GET"])
+def graficoTipoDispositivos():
+    return send_file('static/html/dispositivos.html')
+
+
+@app.route('/grafico/contactos-comuna', methods=["GET"])
+def graficoContactosComuna():
+    return send_file('static/html/comunas.html')
 
 
 if __name__ == "__main__":

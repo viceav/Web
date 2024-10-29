@@ -63,6 +63,10 @@ label:has(+ input:required)::after {
   border-radius: 4px;
 }
 
+h2 {
+  color: #fff;
+}
+
 #val-box h2,
 #server-box h2 {
   margin: 0 0 10px 0;

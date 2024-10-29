@@ -122,3 +122,17 @@ def getComments(dispositivo_id):
     cursor = conn.cursor()
     cursor.execute(QUERY_DICT["getComments"], (dispositivo_id))
     return cursor.fetchall()
+
+
+def getContactosComuna():
+    conn = getConnection()
+    cursor = conn.cursor()
+    cursor.execute(QUERY_DICT["getContactosComuna"])
+    return cursor.fetchall()
+
+
+def getTipoDispositivo():
+    conn = getConnection()
+    cursor = conn.cursor()
+    cursor.execute(QUERY_DICT["getTipoDispositivo"])
+    return cursor.fetchall()
