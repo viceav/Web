@@ -11,8 +11,8 @@ def getConnection():
         db='tarea2',
         user='cc5002',
         passwd='programacionweb',
-        # host='localhost',
-        host='172.17.0.2',  # Mysql Container
+        host='localhost',
+        # host='172.17.0.2',  # Mysql Container
         port=3306,
         charset='utf8')
     return conn
