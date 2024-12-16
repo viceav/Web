@@ -1,0 +1,107 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Administrador de fotos</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/css/output.css" />
+    <script src="/admin/js/remove.js"></script>
+  </head>
+  <body class="bg-gray-800" id="content">
+    <div class="mx-auto w-3/4 my-10">
+      <a href="/" class="text-white hover:text-blue-700 underline">Index</a>
+      <div th:if="${msg}">
+        <h1
+          th:text="${msg}"
+          class="bg-green-400 rounded p-2 mb-3 text-center font-bold"
+          id="msg"
+        ></h1>
+        <script>
+          setTimeout(() => {
+            document.getElementById("msg").remove();
+          }, 3000);
+        </script>
+      </div>
+      <table class="border-collapse border border-white-800 text-white w-full">
+        <tr>
+          <th>Nombre Dispositivo</th>
+          <th>Email Contacto</th>
+          <th>Foto</th>
+          <th></th>
+        </tr>
+        <tr th:each="arch : ${archivos}">
+          <td
+            th:text="${arch.dis}"
+            class="text-center border border-white-800 w-1/4"
+          >
+            Nombre
+          </td>
+          <td
+            th:text="${arch.con}"
+            class="text-center border border-white-800 w-1/4"
+          >
+            Email
+          </td>
+          <td class="text-center border border-white-800 w-full">
+            <img
+              class="object-contain h-52 w-auto m-auto"
+              th:src="${arch.ruta}"
+              th:alt="${arch.ruta}"
+            />
+          </td>
+          <td class="text-center border border-white-800">
+            <button
+              class="p-2 bg-gray-950 rounded fa fa-trash mx-2"
+              type="button"
+              th:onclick="removeButton([(${arch.id})],[[${arch.dis}]])"
+            ></button>
+          </td>
+        </tr>
+      </table>
+      <a
+        th:href="@{'/admin/page/' + ${prev}}"
+        th:if="${prev >= 0}"
+        class="bg-gray-600 px-2 py-1 rounded fa fa-caret-left mt-1"
+      >
+      </a>
+      <a
+        th:href="@{'/admin/page/' + ${next}}"
+        th:if="${next}"
+        class="bg-gray-600 px-2 py-1 rounded fa fa-caret-right mt-1"
+      ></a>
+    </div>
+    <div
+      id="popup"
+      class="fixed inset-0 justify-center items-center hidden bg-gray-800 bg-opacity-70 text-white"
+    >
+      <div
+        class="bg-gray-700 rounded space-y-4 flex flex-col items-center justify-center pt-5 pb-5"
+      >
+        <h2 id="motivo" class="w-3/4 text-center"></h2>
+        <form id="rm" method="POST">
+          <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+          <textarea
+            id="textarea"
+            placeholder="Motivo de eliminación"
+            class="rounded mx-5 h-full min-h-20 resize-none placeholder-gray-500 text-black"
+            name="msg"
+            maxlength="200"
+            required
+          ></textarea>
+        </form>
+        <div class="space-x-12">
+          <button class="bg-red-800 rounded p-1" id="cancel" type="button">
+            Cancelar
+          </button>
+          <button class="bg-green-800 rounded p-1" type="submit" form="rm">
+            Enviar
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

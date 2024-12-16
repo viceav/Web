@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Dispositivo {
@@ -43,6 +45,14 @@ public class Dispositivo {
   private Integer contador_megusta;
 
   private Integer contador_nomegusta;
+
+  @ManyToOne
+  @JoinColumn(name = "contacto_id")
+  private Contacto contacto;
+
+  public Contacto getContacto() {
+    return contacto;
+  }
 
   public void setContador_megusta(Integer contador_megusta) {
     this.contador_megusta = contador_megusta;

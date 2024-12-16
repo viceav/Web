@@ -8,11 +8,14 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <link rel="stylesheet" href="/output.css" />
-    <script src="/process.js"></script>
+    <link rel="stylesheet" href="/css/output.css" />
+    <script src="/js/process.js"></script>
   </head>
   <body class="bg-gray-800">
-    <div class="mx-auto w-3/4 mt-10">
+    <div class="mx-auto w-3/4 my-10">
+      <a href="/admin" class="text-white hover:text-blue-700 underline"
+        >Admin</a
+      >
       <table class="border-collapse border border-white-800 text-white w-full">
         <tr>
           <th>ID</th>
@@ -52,7 +55,7 @@
             <button
               class="p-1 bg-gray-950 rounded"
               type="button"
-              th:onclick="processButton('me_gusta-[[${dis.id}]]')"
+              th:onclick="processButton('me_gusta-[(${dis.id})]')"
             >
               <span class="fa fa-thumbs-up"></span
               ><span
@@ -66,7 +69,7 @@
             <button
               class="p-1 bg-gray-950 rounded"
               type="button"
-              th:onclick="processButton('no_me_gusta-[[${dis.id}]]')"
+              th:onclick="processButton('no_me_gusta-[(${dis.id})]')"
             >
               <span class="fa fa-thumbs-down"></span
               ><span
@@ -78,15 +81,17 @@
           </td>
         </tr>
       </table>
-      <a th:href="@{'/page/' + ${prev}}" th:if="${prev >= 0}">
-        <button
-          class="bg-gray-600 px-2 py-1 rounded fa fa-caret-left mt-1"
-        ></button></a
-      ><a th:href="@{'/page/' + ${next}}" th:if="${next}">
-        <button
-          class="bg-gray-600 px-2 py-1 rounded fa fa-caret-right mt-1"
-        ></button
-      ></a>
+      <a
+        th:href="@{'/page/' + ${prev}}"
+        th:if="${prev >= 0}"
+        class="bg-gray-600 px-2 py-1 rounded fa fa-caret-left mt-1"
+      ></a
+      ><a
+        th:href="@{'/page/' + ${next}}"
+        th:if="${next}"
+        class="bg-gray-600 px-2 py-1 rounded fa fa-caret-right mt-1"
+      >
+      </a>
     </div>
   </body>
 </html>
